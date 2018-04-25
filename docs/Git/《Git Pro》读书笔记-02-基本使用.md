@@ -38,6 +38,21 @@ git config --global user.email <EMAIL>
 
 > 说明：--global 选项指明该配置是全局的，但如果仅仅想当前工程使用该配置，则不要指定 --global 选项。
 
+## 技巧
+
+### 别名
+
+> Git命令行不带命令补齐功能，因此，如果不想重复输入冗长的命令，可以为命令设置别名。
+
+```git
+# 配置别名，示例：git config --global alias.co checkout
+git config --global alias.<ALIAS> <COMMAND>
+```
+
+### 外部命令
+
+使用 !command 调用外部命令，当然，也可以将其设置为别名。
+
 ## 其他
 
 ```git
@@ -57,7 +72,13 @@ git config --global core.editor=vim
 git clone <URL>
 ```
 
-> 说明：该方法适用于全新开始建库。结果是将克隆一个“空”的库。
+> 说明：
+>
+> 该方法适用于全新开始建库，结果是将克隆一个“空”的库；或者克隆一个已经存在的库继续工作。
+>
+> clone一个仓库时，会自动将其添加为远程仓库，默认简写“origin”。
+>
+> clone会自动设置默认分支（通常是master分支）跟踪。
 
 方法二：
 
@@ -77,10 +98,11 @@ git push -u origin master
 
 ## 暂存区操作
 
-### 添加到暂存区
+### 添加、移除
 
 ```git
 git add <.|FILES>
+git reset HEAD [FILES]
 ```
 
 > 说明：
@@ -88,20 +110,10 @@ git add <.|FILES>
 > “git add .”将把当前工作目录中所有改变加入暂存区。注意，它的影响是递归的。
 >
 > 对于 SVN 而言，新建的文件（未跟踪）才可以添加到索引；而对于 Git 而言，可添加到暂存区的文件不仅包括新建的未跟踪文件，还包括已修改的跟踪文件。
-
-### 从暂存区移除
-
-```git
-git reset HEAD [FILES]
-```
-
-> 说明：
 >
-> 是 add 操作的逆操作。
->
-> 不指定文件则清空暂存区。
+> git reset HEAD不指定文件则清空暂存区。
 
-### 从暂存区删除
+### 删除
 
 ```git
 git rm [--force|-f] --cached <FILES>
@@ -176,11 +188,117 @@ git commit --amend
 git checkout <FILES>
 ```
 
-> 这是一个危险操作，工作副本将被覆盖。
+> **注意：这是一个危险操作，工作副本将被覆盖。**
 
 ## 远程仓库操作
 
+### 查看
 
+```git
+# 查看所有远程服务器简写、地址
+git remote [-v | --verbose]
+# 查看某远程仓库信息
+git remote show [REMOTE_NAME]
+```
+
+### 添加、移除和重命名
+
+```git
+# 添加远程仓库
+git remote add <SHORT_NAME> <URL>
+# 重命名
+git remote rename <OLD_SHORT_NAME> <NEW_SHORT_NAME>
+## 移除
+git remote rm <MISS_NAME>
+```
+
+> 注意：
+>
+> 远程仓库简写名只是本地仓库简化远程仓库地址的一种方式，它不存在于远程仓库中，对于多个本地仓库而言，重命名只会修改自身信息，不会影响其他本地仓库。
+
+### 获取/抓取、拉取
+
+```git
+git fetch [REMOTE_NAME]
+git pull
+```
+
+> 说明：
+>
+> git fetch将数据获取到本地仓库，并不会自动合并或修改工作副本。
+>
+> git pull效果相当于在fetch的基础上，合并到当前分支。
+
+### 推送
+
+```git
+# 示例：git push origin master
+git push [REMOTE_NAME] [BRANCH_NAME]
+```
+
+
+
+## 标签
+
+> 分类：轻量标签（lightweight）、附注标签（annotated）。
+>
+> 轻量标签：特定提交的引用。像一个不会改变的分支。
+>
+> 附注标签：存储在Git数据库中的一个完整对象。可校验，有附加信息。
+>
+> 建议创建附注标签，因为即可拥有附加信息等，轻量标签通常作为临时标签。
+
+### 查看
+
+```git
+# 查看标签列表，示例：git tag -l 'v1.0*'
+git tag [-l <PATTERN>]
+# 查看标签信息及对应的提交信息
+git show <TAG>
+```
+
+> 说明：git show命令查看附注标签和轻量标签反馈信息区别在于，附注标签会显示额外的标签信息，而轻量标签没有。
+
+### 添加、删除
+
+```git
+# 附注标签
+git tag -a <ANNOTATE> -m <MESSAGE>
+# 轻量标签
+git tag <TAG>
+# 补打标签，示例：git tag v0.0.1 e6d105
+git log --pretty=oneline
+git tag -a <TAG> <CHECK_SUM>
+# 删除本地标签
+git tag -d <TAG>
+```
+
+> 说明：
+>
+> 标签本质上来说是对某次提交的引用，因此，补打标签则需要指定某次提交即可。而提交需使用其校验和来指定，故提供校验和（或部分校验和）即可。
+
+### 共享、移除
+
+```git
+# 推送单个标签
+git push origin [TAG]
+# 推送多个标签
+git push origin --tags
+# 移除
+git push origin --delete [tag] <TAG>
+```
+
+> 说明：
+>
+> 默认，git push不会推送标签到远程仓库。要推送必须显式指定。
+
+### 检出
+
+```git
+git checkout -b [BRANCH_NAME] [TAG]
+```
+
+> 说明：由于标签仅仅是对提交的引用，因此，并不能检出一个标签。如果想在某个标签状态下工作，只能将该标签检出为一个新分支。
 
 ## 查看状态
 
