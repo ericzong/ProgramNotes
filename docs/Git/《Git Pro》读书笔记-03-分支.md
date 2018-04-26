@@ -1,0 +1,176 @@
+# 概述
+
+Git分支，本质上是指向提交对象的可变指针。
+
+# 日常使用
+
+## 本地分支
+### 查看
+
+```git
+# 查看当前HEAD所指的分支历史
+git log --oneline --decorate
+# 查看所有分支
+git branch
+# 查看所有分支最后一次提交
+git branch -v
+# 查看已/未合并到当前分支的分支
+git branch <--merged | --no-merged>
+```
+
+> 说明：
+>
+> git branch列出的分支中前面带“*”的代表当前检出的分支。
+>
+> 已合并分支不仅包括git merge合并的分支，还包括当前分支的上游分支。
+
+### 创建
+
+```git
+# 创建一个新分支
+git branch [BRANCH_NAME]
+# 创建新分支并切换到新分支
+git checkout -b [BRANCH_NAME]
+```
+
+> 说明：
+>
+> git branch会在当前所在的提交对象上创建一个指针。注意仅创建了分支，但不会自动切换。
+>
+> Git使用HEAD特殊指针引用当前所在的本地分支。
+>
+> git checkout -b mybranch等价于如下两条命令：
+> git branch mybranch
+> git checkout mybranch
+
+### 切换
+
+```git
+git checkout [OTHER_BRANCH_NAME]
+```
+
+> 说明：
+>
+> 分支切换会改变工作副本。
+>
+> 当然，也可以用上文提到的命令创建并切换分支。
+>
+> 注意，切换分支时，当前分支应该是干净的状态，即工作副本和暂存区都应没有修改的文件。否则，Git将阻止切换——因为这可能导致修改丢失。
+
+### 合并 
+
+```git
+git merge [ANOTHER_BRANCH_NAME]
+```
+
+> 说明：
+>
+> 合并是将另一个分支合并到当前分支。
+>
+> 如果当前分支是被合并分支的上游，则合并是“快进（fast-forward）”的，仅向前移动指针即可。
+> 如果两个分支来源于不同的分叉（diverged），那么Git使用两个分支的末端快照和它们的共同祖先（合并基础，由Git选择最优的）做一个简单的三方合并。将产生新快照和一个指向它的新提交（合并提交，有2个父提交）。
+> 合并冲突，Git仅做合并，但没创建合并提交。手动处理冲突流程：
+>
+> 1. 使用git status命令查看并处理未合并（unmerged）文件；
+> 2. 编辑冲突文件；
+> 3. 使用git add标记冲突已解决；
+> 4. git status确认冲突已解决；
+> 5. git commit合并提交。
+
+### 变基
+
+变基，将一个分支的修改在另一分支上应用。整合分支的另一种方法。
+
+```git
+git rabase <BASE_BRANCH> <TOPIC_BRANCH>
+```
+
+> 说明：
+>
+> 原理是，查找两个分支的最近共同祖先，将当前分支与祖先对比，提取修改并存为临时文件，然后在目标基底上应用这些修改。
+>
+> 与合并不同，合并操作时在合并到的分支，而变基时在“被合并”的分支。
+> 再切换到“合并”分支，将变基后的“被合并”分支merge，注意这是一次快进合并。
+>
+> 变基的目的是推送时提交历史整洁，作为代价，显然会丢弃掉一些历史。
+>
+> 应该在未推送的提交上执行变基，否则……
+
+### 删除
+
+```git
+git branch -d [BRANCH_NAME]
+```
+
+> 说明：
+>
+> 删除未合并的分支意味着有工作会丢失，因此会失败，除非使用“-D”强制删除。
+
+## 远程分支
+
+### 查看
+
+```git
+git ls-remote [SHORT_NAME]
+git remote show [SHORT_NAME]
+```
+
+### 推送
+
+本地分支不会自动与远程仓库同步，必须显式推送。
+
+```git
+git push <SHORT_NAME> <BRANCH_NAME>
+git push <SHORT_NAME> <LOCAL_BRANCH>:<REMOTE_BRANCH>
+```
+
+> 说明：
+>
+> 第二行的命令指定了远程分支名，它可以和本地分支不一样，这可以在远程仓库中创建与本地分支不同名的远程分支（如指定远程分支不存在），或推送到另一远程分支（远程分支存在）。
+
+### 跟踪
+
+跟踪分支，是与远程分支有直接关系的本地分支。
+
+在跟踪分支上pull，Git能自动识别抓取源和合并目标。
+
+自动创建跟踪分支：
+
+1. 克隆仓库时，自动创建跟踪origin/master的master分支；
+2. 从一个远程分支检出一个本地分支时，自动创建跟踪分支。
+
+```git
+# 本地分支和远程分支名称可不相同
+git checkout -b <LOCAL_BRANCH> <SHORT_NAME>/<REMOTE_BRANCH>
+# 快捷方式，本地分支和远程分支名称相同
+git checkout --track <SHORT_NAME>/<REMOTE_BRANCH>
+# 设置已有本地分支跟踪远程分支
+git branch <-u | --set-upstream-to> <SHORT_NAME>/<REMOTE_BRANCH>
+
+# 查看所有跟踪分支
+git branch -vv
+```
+
+### 删除
+
+```git
+git push <SHORT_NAME> --delete <BRANCH>
+```
+
+
+
+# 附录
+
+## 技巧
+
+### 避免每次输入密码
+
+如使用HTTPS URL推送，Git服务器会询问用户名与密码。可设置“credential cache”，保存在内存中几分钟：
+
+```git
+git config --global credential.helper cache
+```
+
+### 引用远程分支
+
+在跟踪分支中，可通过 @{upstream} 或 @{u} 引用远程分支。比如：在master分支可使用git merge @{u}来取代git merge origin/master。
