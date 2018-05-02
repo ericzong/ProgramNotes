@@ -42,6 +42,217 @@ TestNG包含几个等级的测试部件，包括：测试套（件）、测试�
 
 # 注解
 
+TestNG有丰富的注解，其中@Test是最常用的，它用以标注测试方法。
 
+另外，较为常用的注解还有@BeforeXXX和@AfterXXX。它们总是成对的，用以定义“前置”和“后置”的行为。
 
+> 注意：当存在继承关系时，@Before注解的方法将按继承链自上而下的顺序执行，@After注解的方法与之相反。
 
+其他的注解这里就不一一赘述了，下文中会具体用到大多数常用的注解。
+
+# 使用配置
+
+## 配置执行单元
+
+TestNG测试套使用xml文件配置的方式提供，以定义执行一组用例，甚至是其他测试套（嵌套）。
+
+TestNG为该xml文件定义有dtd，因此，xml配置文件的第一行总是这样：
+
+```xml
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+```
+
+测试套的所有内容都应该定义在&lt;suite&gt;标签内，并通常在其中用&lt;test&gt;标签定义多个测试，测试可以指定执行的类、包甚至是方法。
+
+### 指定包
+
+```xml
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="测试套件" verbose="1" >
+  <test name="简单测试">
+    <packages>
+      <package name="test.sample" />
+      <package name="test.sample2" />
+    </packages>
+  </test>
+</suite>
+```
+
+> 指定包下的所有测试类都将被执行，但不包含子包中的测试类。
+
+### 指定类
+
+```xml
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="测试套件" verbose="1" >
+  <test name="无名包类" >
+    <classes>
+       <class name="NoPackageTest" />
+    </classes>
+  </test>
+ 
+  <test name="非无名包类">
+    <classes>
+      <class name="test.sample.ParameterSample"/>
+      <class name="test.sample.ParameterTest"/>
+    </classes>
+  </test>
+</suite>
+```
+
+> 类名应以全限定名给出。
+
+### 指定方法
+
+```xml
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="测试套件" verbose="1" >
+  <test name="简单测试">
+    <classes>
+      <class name="test.sample.FirstTest">
+        <methods>
+          <include name="testCase" />
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>
+```
+
+> 指定方法时，不仅指定了要执行的测试类，还指明了其中需要执行的测试方法。
+>
+> 可以看出，以上3种配置是层层细化的，可以灵活地配置各种级别的执行情况。
+
+## 分组
+
+@Test注解的groups属性可定义分组，并可在配置指定执行哪些分组。比如：
+
+```java
+public class GroupTest
+{
+    @Test(groups = {"异常"})
+    public void testExceptionMethod() {...}
+
+    @Test(groups = {"高"})
+    public void testMethod() {...}
+}
+```
+
+配置如下：
+
+```xml
+<suite name="测试套件" verbose="1" >
+  <test name="简单测试">
+    <groups>
+      <run>
+        <exclude name="异常"  />  <!-- name指定的是分组 -->
+        <include name="高"  />  <!-- 是@Test的groups属性定义的 -->
+      </run>
+    </groups>
+ 
+    <classes>
+      <class name="test.sample.GroupTest"/>
+    </classes>
+  </test>
+</suite>
+```
+
+> 分组是在测试方法上定义的，并在配置中指定是否执行。
+
+### 使用正则表达式
+
+上面指定的是分组的全名，我们也可以指定正则表达式来匹配分组名，比如：
+
+```java
+public class RegularExpressionTest
+{
+    @Test(groups = {"windows.test"})
+    public void testWindowsOnly() {...}
+    
+    @Test(groups = {"linux.test"})
+    public void testLinuxOnly() {...}
+    
+    @Test(groups = {"windows.functest"})
+    public void testWindowsToo() {...}
+}
+```
+
+配置中使用正则表达式如下：
+
+```xml
+<test name="正则表达式测试">
+  <groups>
+    <run>
+      <include name="windows.*"/>
+    </run>
+  </groups>
+ 
+  <classes>
+    <class name="example.RegularExpressionTest"/>
+  </classes>
+</test>
+```
+
+### 部分组（Partial group）
+
+上面的分组都是在方法级别定义的，但还可以在类级别定义分组，比如：
+
+```java
+@Test(groups = {"partial-group-test"})
+public class All
+{
+    @Test(groups = {"method-group-test"})
+    public void method1() {...}
+    
+    public void method2() {...}
+}
+```
+
+> method2()是partial-group-test分组的一部分，因此称为“部分组”；而method1()除了属于其上定义的method-group-test分组外，也属于partial-group-test分组。
+
+### 元分组（MetaGroup）——分组的分组
+
+不仅可以指定执行测试类中定义的分组，甚至可以指定执行在配置文件中定义的分组。比如：
+
+```xml
+<test name="元分组测试">
+  <groups>
+    <define name="functest"> <!-- 定义分组 -->
+      <include name="windows"/> <!-- 引用了测试类中的分组 -->
+      <include name="linux"/>
+    </define>
+  
+    <define name="all"> <!-- 定义分组 -->
+      <include name="functest"/> <!-- 引用上面定义的分组 -->
+      <include name="checkintest"/> <!-- 引用了测试类中的分组 -->
+    </define>
+  
+    <run>
+      <include name="all"/> <!-- 执行上面定义的分组 -->
+    </run>
+  </groups>
+  
+  <classes>
+    <class name="test.sample.MetaGroupTest"/>
+  </classes>
+</test>
+```
+
+### 方法分组
+
+```xml
+<test name="方法分组测试">
+  <classes>
+    <class name="example.MethodGroupTest">
+      <methods>
+        <include name=".*enabledTestMethod.*"/>
+        <exclude name=".*brokenTestMethod.*"/>
+      </methods>
+     </class>
+  </classes>
+</test>
+```
+
+> 个人认为，严格来说这不应该叫作分组，配置文件中并没有出现&lt;groups&gt;标签，但官方文档就是这样定义的，姑且这样叫吧。
+>
+> 注意，方法分组跟使用正则表达式匹配分组很像，但它们是不同的。首先，它们配置的标签不同；其次，方法分组的正则表达式匹配的是方法名，而不是分组名。
