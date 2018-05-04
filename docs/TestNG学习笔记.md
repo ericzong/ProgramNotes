@@ -256,3 +256,93 @@ public class All
 > 个人认为，严格来说这不应该叫作分组，配置文件中并没有出现&lt;groups&gt;标签，但官方文档就是这样定义的，姑且这样叫吧。
 >
 > 注意，方法分组跟使用正则表达式匹配分组很像，但它们是不同的。首先，它们配置的标签不同；其次，方法分组的正则表达式匹配的是方法名，而不是分组名。
+
+## 执行顺序
+
+测试是按XML中配置的顺序执行的，如果想以不可预知的顺序执行，那么，只需要设置preserve-order属性为false即可：
+
+```xml
+<test name="乱序执行测试" preserve-order="false">
+```
+
+## 参数化
+
+测试方法不必是无参的，有时传入参数会简化测试代码并增加灵活性。
+
+有2种方式为方法提供参数，一种是通过XML配置文件传入，另一种是编写一个返回数据的方法充当数据提供器。
+
+### 配置参数
+
+首先，应该在XML文件中定义参数：
+
+```xml
+<suite name="测试套件">
+  <parameter name="first-name" value="Eric"/>
+  <test name="XML参数测试">
+```
+
+然后，在测试方法上注解注入这个参数就可以了：
+
+```java
+@Parameters({ "first-name" })
+@Test
+public void testXmlParameter(String firstName) {
+  assert "Eric".equals(firstName);
+}
+```
+
+> 说明：
+>
+> 1. XML中定义的参数名不需要与方法参数相同，如上例一为“first-name”一为“firstName”。
+> 2. 可重复使用&lt;parameter&gt;定义多个参数，并在注解@Parameters中提供参数名数组作为属性，即可传入多个参数。但注解指定的参数个数应与方法参数个数匹配。
+> 3. @Parameters注解不仅可应用于@Test（即@Test注解的方法，下同），还可以应用于：@BeforeXXX、@AfterXXX、@Factory以及至多一个构造器。
+
+如果指定要传入的参数在XML中未定义，则会抛出异常，除非使用@Optional提供默认值：
+
+```java
+@Parameters("miss")
+@Test
+public void testNonExistentParameter(@Optional("defaultValue")String value) {...}
+```
+
+### 数据提供器
+
+从配置参数的说明中可以看出，它存在不少限制：
+
+1. 当参数过多时，定义和使用都比较繁琐（当然，跟Java方法的建议一样，就不应该传入过多的参数）。
+2. 仅能传字符串。由于是从XML读取的数据，所以只能是字符串。
+3. 仅能传一组参数。如果想传入多组参数进行测试就不行了。
+
+以上限制对于数据提供器而言，都将不是问题。
+
+所谓数据提供器，其实就是一个创建并返回参数的方法：
+
+```java
+@DataProvider(name = "data")
+public Object[][] createData() 
+{
+    return new Object[][]
+    {
+        { "Eric", new Integer(100) },
+		{ "Zong", new Integer(500)},
+    };
+}
+```
+
+注意，数据提供器的返回值类型必须是Object\[\]\[\]（或Iterator&lt;Object[]&gt;）。可以将其看作一个表格，每一行就是一组测试数据。
+
+使用方法如下：
+
+```java
+@Test(dataProvider = "data")
+public void testGroupData(String name, Integer no)
+{
+    System.out.println(n1 + " " + n2);
+}
+```
+
+映射关系由@Test的dataProvider属性和@DataProvider的name属性对应确定，上例中是“data”。
+
+注意，由于提供的数据有“两行”，所以测试方法testGroupData()将被调用两次，各传入“一行”数据。
+
+默认情况下，将在当前类或其基类中查找数据提供器。
