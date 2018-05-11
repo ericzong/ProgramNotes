@@ -66,6 +66,17 @@ Postman 的界面很简洁，基本上看一眼就能简单上手使用。
 >
 > 说明：该 URL 等价于 http://www.myhost.com/mypath。
 
+## Pre-request scripts
+
+### 参数
+
+```js
+pm.environment.set('now', JSON.stringify(new Date()))
+// {{now}} 引用
+```
+
+
+
 ## Tests
 
 在数据验证方面，Postman 没有类似其他 Restful API 测试工具的 Assert 配置，而是使用 JS 脚本编写 Tests 进行验证。
