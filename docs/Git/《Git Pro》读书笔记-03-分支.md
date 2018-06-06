@@ -82,15 +82,12 @@ git merge [ANOTHER_BRANCH_NAME]
 变基，将一个分支的修改在另一分支上应用。整合分支的另一种方法。
 
 ```git
-git rabase <BASE_BRANCH> <TOPIC_BRANCH>
+git rebase <BASE_BRANCH> <TOPIC_BRANCH>
 ```
 
 > 说明：
 >
 > 原理是，查找两个分支的最近共同祖先，将当前分支与祖先对比，提取修改并存为临时文件，然后在目标基底上应用这些修改。
->
-> 与合并不同，合并操作时在合并到的分支，而变基时在“被合并”的分支。
-> 再切换到“合并”分支，将变基后的“被合并”分支merge，注意这是一次快进合并。
 >
 > 变基的目的是推送时提交历史整洁，作为代价，显然会丢弃掉一些历史。
 >
@@ -156,8 +153,6 @@ git branch -vv
 ```git
 git push <SHORT_NAME> --delete <BRANCH>
 ```
-
-
 
 # 附录
 
