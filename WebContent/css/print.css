@@ -1,0 +1,74 @@
+@CHARSET "UTF-8";
+/* -------------------- 打印样式 -------------------- */
+
+/* 排版 */
+h1, h2, h3 {
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+p, ul, ol {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+div.ext>* {
+	margin-left: 5px;
+}
+
+table {
+	min-width: 60%;
+}
+
+/* 导航栏：隐藏 */
+#sideBar {
+	display: none;
+}
+
+hr {
+	display: none;
+}
+
+body {
+	min-width: 400px;
+	color: #000;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+	/* 分栏 */
+	column-count: 2;
+	-moz-column-count: 1; /* Firefox */
+	-webkit-column-count: 2; /* Safari 和 Chrome */
+}
+
+img {
+	max-width: 100% !important;
+}
+
+/* 分页 */
+h1, h2, h3 {
+	page-break-after: avoid;
+}
+
+ul, img, pre, table, div, pre {
+	page-break-inside: avoid;
+}
+
+/* 超链接设置 */
+a {
+	font-weight: bolder;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+a[href^=http]:after {
+	content: "(" attr(href) ")";
+}
+
+/* 折叠 */
+.fold .ico {
+	display: none;
+}
+details:not([open]) {
+	display: none;
+}

@@ -1,0 +1,261 @@
+@CHARSET "UTF-8";
+
+/* ------------------------------ 1. 字体外观 ------------------------------ */
+/* 字号 */
+* {
+	font-size: 12px;
+}
+h1 {
+	font-size: 16px;
+}
+h2 {
+	font-size: 14px;
+}
+
+dt, .bold {
+	font-weight: bold;
+}
+.notice, .comment {
+	color: red;
+}
+.delete {
+	text-decoration: line-through;
+}
+
+/* 无下划线超链接 */
+a.normal {
+	text-decoration: none;
+}
+
+/* 无边框表格 */
+table.invisible {
+	border: 0;
+}
+table.invisible td {
+	border: 0;
+}
+
+/* ------------------------------ 2. 排版 ------------------------------ */
+body {
+	min-width: 1000px;
+}
+/* 缩进 */
+p {
+	text-indent: 2em;
+}
+li p {
+	text-indent: 0;
+}
+body {
+	padding-left: 2em;
+}
+body>h1, h2, h3, p {
+	padding-left: 0;
+	margin-left: 0;
+}
+dt {
+	text-indent: 2em;
+}
+
+/* 紧临下行 */
+.next {
+	margin-bottom: 2px;
+}
+.next+* {
+	margin-top: 0;
+}
+
+/* 区块：details */
+details {
+	border: 1px dashed;
+	background-color: #F5F5F5;
+	width: 90%;
+}
+
+summary {
+	padding: 5px;
+	background-color: #C0C0C0;
+}
+
+/* 区块：textarea */
+div.textarea {
+	border: 1px solid;
+	width: 90%;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+div.textarea * {
+	margin: 0;
+}
+div.textarea>* {
+	margin-left: 2em;
+}
+div.textarea>p {
+	margin-left: 0;
+}
+div.textarea>ul {
+	margin: 0;
+}
+div.textarea>ol {
+	margin: 0;
+}
+
+/* 区块：code */
+div.code {
+	border: 1px solid;
+	width: 90%;
+	padding: 5px;
+}
+
+/* 区块：ext */
+div.ext {
+	border: 1px dotted;
+	background-color: #eeeeee;
+	width: 90%;
+	padding: 2px;
+}
+div.ext * {
+	margin: 0;
+}
+div.ext>* {
+	margin-left: 2em;
+}
+div.ext>p {
+	margin-left: 0;
+}
+div.ext>ul {
+	margin: 0;
+}
+div.ext>ol {
+	margin: 0;
+}
+
+/* 格式化块：textarea */
+pre.textarea {
+	border: 1px solid;
+	width: 90%;
+	padding: 5px;
+}
+
+/* 格式化块：code */
+pre.code {
+	border: 1px solid;
+	width: 90%;
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+pre.code>code {
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+}
+
+/* 无标记列表 */
+ol.none {
+	margin: 0;
+	margin-left: 2em;
+	padding: 0;
+}
+ul.none {
+	margin: 0;
+	margin-left: 2em;
+	padding: 0;
+}
+
+/* 表格 */
+table {
+	border-collapse: collapse;
+	margin-left: 2em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	min-width: 80%;
+}
+caption {
+	font-weight: bold;
+}
+table, th, td {
+	border: 1px solid;
+	padding: 3px;
+}
+td {
+	vertical-align: top;
+}
+td * {
+	margin: 0;
+}
+td ul {
+	padding-left: 2em;
+}
+td>pre {
+	margin: 0;
+	margin-top: -14px;
+	padding: 0;
+}
+td>pre>code {
+	margin: 0;
+	padding: 0;
+}
+
+dt {
+	float: left; /* 将 dt, dd 元素置于同一行 */
+	padding-right: 5px;
+}
+
+dt, dd {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+/* ------------------------------ 3. 编号 ------------------------------ */
+/* 有序列表第一级列表项索引为大写罗马数字 */
+div.list>ol>li {
+	list-style-type: upper-roman;
+}
+/* 有序列表第二级列表项索引为小写罗马数字 */
+div.list>ol>li>ol>li {
+	list-style-type: lower-roman;
+}
+
+ol.none, ul.none li {
+	list-style-type: none;
+}
+
+body {
+	counter-reset: h1num;
+}
+
+h1 {
+	counter-reset: h2num;
+}
+
+h2 {
+	counter-reset: h3num;
+}
+
+h1:before {
+	counter-increment: h1num;
+	content: counter(h1num) ". "
+}
+
+h2:before {
+	counter-increment: h2num;
+	content: counter(h1num) "." counter(h2num) ". "
+}
+
+h3:before {
+	counter-increment: h3num;
+	content: counter(h1num) "." counter(h2num) "." counter(h3num) ". "
+}
+
+/* ------------------------------ 4. 语义 ------------------------------ */
+
+/* 引用 */
+.reference {
+	text-align: right;
+	margin-top: 0;
+}
+
+.reference:before {
+	content: "——";
+}
