@@ -17,7 +17,11 @@ div.ext>* {
 }
 
 table {
-	min-width: 60%;
+	max-width: 95%;
+}
+
+th, td {
+	white-space: nowrap;
 }
 
 /* 导航栏：隐藏 */

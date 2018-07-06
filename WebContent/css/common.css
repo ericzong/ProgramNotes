@@ -178,6 +178,9 @@ table, th, td {
 	border: 1px solid;
 	padding: 3px;
 }
+th, td {
+	min-width: 20px;
+}
 td {
 	vertical-align: top;
 }
