@@ -19,4 +19,9 @@ git config --global user.email <EMAIL>
 git add <.|FILES>
 ```
 
-4. 多个可选值间用“|”分隔，
+4. 多个可选值间用“|”分隔，并且前后均有一个空格
+
+```git
+git branch <--merged | --no-merged>
+```
+
