@@ -30,6 +30,21 @@
 | Boolean | 布尔型 |
 | String  | 字符串 |
 
+## Numbers 相关函数
+
+| 函数    | 说明                                          | 示例                   |
+| ------- | --------------------------------------------- | ---------------------- |
+| zero    | 操作数为 0，返回 true；否则 false             | (zero? 0.0) ;; true    |
+| pos     | 操作数大于 0，返回 true；否则 false           | (pos? 42) ;; true      |
+| neg     | 操作数小于 0，返回 true；否则 false           | (neg? -42) ;; true     |
+| even    | 操作数是偶数，返回 true；若不是整数，抛出异常 | (even? 42) ;; true     |
+| odd     | 操作数是基数，返回 true；若不是整数，抛出异常 | (odd? 43)  ;; true     |
+| number  | 操作数为数字，返回 true。                     | (number? 42) ;; true   |
+| integer | 操作数为整数，返回 true。                     | (integer? 42) ;; true  |
+| float   | 操作数为浮点数，返回 true。                   | (float? 42.67) ;; true |
+
+
+
 # 运算符
 
 ## 算术运算符
