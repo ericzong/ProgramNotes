@@ -1,3 +1,23 @@
+# 程序安装
+
+# Java
+
+1. 下载Linux压缩包 jdk-8u181-linux-x64.tar.gz，解压到希望的位置，如：/home/ericzong/softwares/jdk1.8.0_181/
+
+2. 编辑 profile 文件
+
+   ```shell
+   sudo vim /etc/profile
+   # 在文件最后追加以下内容
+   # set java environment
+   JAVA_HOME=/home/ericzong/sofewares/jdk1.8.0_181
+   JRE_HOME=$JAVA_HOME/jre
+   CLASSPATH=.:$JAVA_HOME/lib/
+   PATH=$JAVA_HOME/bin:$PATH
+   # 使 profile 生效
+   source /etc/profile
+   ```
+
 # 快捷技巧
 
 ## 命令在终端可直接访问
