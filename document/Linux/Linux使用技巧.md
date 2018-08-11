@@ -18,6 +18,17 @@
    source /etc/profile
    ```
 
+## LibreOffice
+
+```shell
+# 安装
+sudo apt-get install libreoffice
+# 卸载
+sudo apt-get remove libreoffice
+```
+
+仓库地址：http://packages.deepin.com/deepin/pool/main/libr/libreoffice/
+
 # 快捷技巧
 
 ## 命令在终端可直接访问
