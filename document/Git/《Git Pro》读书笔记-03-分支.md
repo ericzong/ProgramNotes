@@ -60,7 +60,7 @@ git checkout [OTHER_BRANCH_NAME]
 ### 合并 
 
 ```git
-git merge [ANOTHER_BRANCH_NAME]
+git merge [--no-ff] [-m <"comment">] [ANOTHER_BRANCH_NAME]
 ```
 
 > 说明：
@@ -76,6 +76,8 @@ git merge [ANOTHER_BRANCH_NAME]
 > 3. 使用git add标记冲突已解决；
 > 4. git status确认冲突已解决；
 > 5. git commit合并提交。
+>
+> 注意：不带“--no-ff”参数，当可快进合并（Fast forward）时，会进行快进合并；带“--no-ff”参数，不进行快进合并。前者看不出曾经做过合并，后者可看到历史有分支。
 
 ### 变基
 
