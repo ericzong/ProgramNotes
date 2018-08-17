@@ -31,7 +31,7 @@ glob 模式， shell 所使用的简化了的正则表达式。
 >
 > 比如：用户名和邮件地址。当进行提交操作时，提交历史中会记录操作者的用户名和邮件地址。因此，我们应该将其事先配置好。
 
-```git
+```shell
 git config --global user.name <USERNAME>
 git config --global user.email <EMAIL>
 ```
@@ -44,7 +44,7 @@ git config --global user.email <EMAIL>
 
 > Git命令行不带命令补齐功能，因此，如果不想重复输入冗长的命令，可以为命令设置别名。
 
-```git
+```shell
 # 配置别名，示例：git config --global alias.co checkout
 git config --global alias.<ALIAS> <COMMAND>
 ```
@@ -68,7 +68,7 @@ git config --global core.editor=vim
 
 方法一：
 
-```git
+```shell
 git clone <URL>
 ```
 
@@ -82,7 +82,7 @@ git clone <URL>
 
 方法二：
 
-```git
+```shell
 # 在工程根目录执行
 git init
 git add .
@@ -100,7 +100,7 @@ git push -u origin master
 
 ### 添加、移除
 
-```git
+```shell
 git add <.|FILES>
 git reset HEAD [FILES]
 ```
@@ -115,7 +115,7 @@ git reset HEAD [FILES]
 
 ### 删除
 
-```git
+```shell
 git rm [--force|-f] --cached <FILES>
 ```
 
@@ -127,7 +127,7 @@ git rm [--force|-f] --cached <FILES>
 >
 > 文件可用 glob 模式指定，如：
 >
-> ```git
+> ```shell
 > git rm log/\*.log
 > git rm \*~
 > ```
@@ -152,7 +152,7 @@ git rm [--force|-f] --cached <FILES>
 
 ### 移动/重命名
 
-```git
+```shell
 git mv <FILE_FROM> <FILE_TO>
 ```
 
@@ -164,7 +164,7 @@ git mv <FILE_FROM> <FILE_TO>
 >
 > 等价于如下操作：
 >
-> ```git
+> ```shell
 > mv <FILE_FROM> <FILE_TO>
 > git rm <FILE_FROM>
 > git add <FILE_TO>
@@ -172,7 +172,7 @@ git mv <FILE_FROM> <FILE_TO>
 
 ### 提交
 
-```git
+```shell
 git commit -m <COMMENT>
 # 修改上一次提交
 git commit --amend
@@ -182,7 +182,7 @@ git commit --amend
 
 ## 工作区还原
 
-```git
+```shell
 git checkout <FILES>
 ```
 
@@ -190,7 +190,7 @@ git checkout <FILES>
 
 ## 已提交未推送查询
 
-```git
+```shell
 # 次数
 git status 
 # 描述
@@ -203,7 +203,7 @@ git log master ^origin/master
 
 ### 查看
 
-```git
+```shell
 # 查看所有远程服务器简写、地址
 git remote [-v | --verbose]
 # 查看某远程仓库信息
@@ -212,7 +212,7 @@ git remote show [REMOTE_NAME]
 
 ### 添加、移除和重命名
 
-```git
+```shell
 # 添加远程仓库
 git remote add <SHORT_NAME> <URL>
 # 重命名
@@ -227,7 +227,7 @@ git remote rm <MISS_NAME>
 
 ### 获取/抓取、拉取
 
-```git
+```shell
 git fetch [REMOTE_NAME]
 git pull
 ```
@@ -240,7 +240,7 @@ git pull
 
 ### 推送
 
-```git
+```shell
 # 示例：git push origin master
 git push [REMOTE_NAME] [BRANCH_NAME]
 ```
@@ -259,7 +259,7 @@ git push [REMOTE_NAME] [BRANCH_NAME]
 
 ### 查看
 
-```git
+```shell
 # 查看标签列表，示例：git tag -l 'v1.0*'
 git tag [-l <PATTERN>]
 # 查看标签信息及对应的提交信息
@@ -270,7 +270,7 @@ git show <TAG>
 
 ### 添加、删除
 
-```git
+```shell
 # 附注标签
 git tag -a <ANNOTATE> -m <MESSAGE>
 # 轻量标签
@@ -288,7 +288,7 @@ git tag -d <TAG>
 
 ### 共享、移除
 
-```git
+```shell
 # 推送单个标签
 git push origin [TAG]
 # 推送多个标签
@@ -305,7 +305,7 @@ git push origin --delete [tag] <TAG>
 
 ### 检出
 
-```git
+```shell
 git checkout -b [BRANCH_NAME] [TAG]
 ```
 
@@ -315,7 +315,7 @@ git checkout -b [BRANCH_NAME] [TAG]
 
 > 当需要进行 Git 操作时，通常都会先查看各文件的状态，以确定哪些文件会被处理，怎样处理。
 
-```git 
+```shell
 # 默认是详细模式
 # 当使用 --short 选项或其缩写 -s 时显示简览
 git status [-s|--short]
@@ -344,13 +344,13 @@ git status [-s|--short]
 
 ## 比较差异
 
-```git
+```shell
 git diff [--cached] [<PATH>...]
 ```
 
 ## 查看日志
 
-```git
+```shell
 git log [-p] [-n] [--stat] [--pretty=oneline|short|full|fuller] --graph
 ```
 
