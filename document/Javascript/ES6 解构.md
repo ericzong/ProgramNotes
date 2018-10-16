@@ -37,6 +37,14 @@ let arr = [];
 ({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true });
 ```
 
+## 数组对象解构
+
+```javascript
+const csvFileLine = '2018,Eric Zong,ericzonglu@126.com';
+// 分别将下标为1和2的值赋给对应变量
+const { 1:name, 2:email} = csvFileLine.split(',');
+```
+
 ## 字符串解构
 
 ```javascript
@@ -102,11 +110,5 @@ for (let [key, value] of map) {
 for (let [key] of map) {}
 // traverse value
 for (let [,value] of map) {}
-```
-
-# 对象相关简写
-
-```javascript
-
 ```
 
