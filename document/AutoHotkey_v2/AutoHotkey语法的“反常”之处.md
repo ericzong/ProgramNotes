@@ -82,3 +82,24 @@ MsgBox % "The value in the variable named Var is " . Var . "."  ; 使用句点�
 
 ## 纯数字变量
 
+命令行参数
+
+
+
+## 空字符串
+
+传统赋值： Var = 
+
+表达式赋值：Var := ""
+
+表达式 if：if (Var <> "")
+
+传统 if：if Var =
+
+# 表达式
+
+## if 语句
+
+表达式 if ，表达式用圆括号括起来，例外：if 后第一项为函数调用或类似 not 或 ! 运算符时，可省略括号。
+
+传统 if
