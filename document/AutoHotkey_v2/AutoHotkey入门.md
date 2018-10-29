@@ -8,6 +8,30 @@ AutoHotkey Basic：即 AutoHotkey 1.0。
 
 AutoHotkey_L：即 AutoHotkey_L。但 AutoHotkey_L 的一些旧版本也使用 1.0.* 版本号。
 
+# 基本使用
+
+## 热键
+
+热键，即快捷键。
+
+### 定义
+
+热键定义与其对应操作以“::”（双冒号）间隔。操作脚本可以跨多行，并以 return 结束；单行脚本写在双冒号右侧，可省略 return。
+
+### 修饰符
+
+热键中，Windows（#）、Control（^）、Shift（+）、Alt（!） 等等称为修饰符，详见 AutoHotkey 帮助手册。
+
+热键中可使用多个修饰符，顺序无关。
+
+### 上下文相关
+
+热键可以是上下文相关的，即根据不同条件执行不同的操作。
+
+### 自定义组合键
+
+可以使用“&”连接两个按键自定义组合键，即按下第一个键后再按下第二个键时触发。
+
 # 基本语法
 
 ## 变量
@@ -62,6 +86,28 @@ AutoHotkey 没有明确的变量类型。形式上所有变量都可以当作字
 
 一些参数不支持表达式，则需要为表达式加上百分号和空格/tab 前缀进行转换。
 
+# FAQ
+
+## Ctrl + Alt + Delete 侵略性检测
+
+系统对 Ctrl + Alt + Delete 进行侵略性检测，意味着除了少数特例外，只要按下这三个键，而不管还按下了其他什么键，都将触发该系统热键。
+
+因此，类似下面这种热键会触发 Ctrl + Alt + Delete 系统热键：
+
+```
+^!s::Send {Delete}
+```
+
+因此，一种变通解决方案是使用 KeyWait 等待热键释放：
+
+```
+^!s::
+KeyWait Control
+KeyWait Alt
+Send {Delete}
+return
+```
+
 # 资源
 
 [官网](https://www.autohotkey.com/)
@@ -81,6 +127,10 @@ AutoHotkey 没有明确的变量类型。形式上所有变量都可以当作字
 [ahkcn.sourceforge.net](http://ahkcn.sourceforge.net/docs/AutoHotkey.htm)（中文 v1.1.15.01）：更新截止到 2014.6。
 
 [thinkai.net](http://thinkai.net/help/1.1/)（中文 v1.1.22.07）
+
+[中文手册](https://github.com/ahkcn/ahkcn.github.io.git)：v1.1.15.01
+
+
 
 ## 教程
 
