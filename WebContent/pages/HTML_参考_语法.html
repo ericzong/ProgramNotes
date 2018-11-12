@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Eric Zong">
+<title>HTML 语法参考</title>
+<link type="text/css" rel="stylesheet" href="../css/common.css"  />
+<link type="text/css" rel="stylesheet" href="../css/fold.css"  />
+<link type="text/css" rel="stylesheet" href="../css/print.css" media="print" />
+<link type="text/css" rel="stylesheet" href="../css/title.css"  />
+<link type="text/css" rel="stylesheet" href="../css/tree.css" />
+<link type="text/css" rel="stylesheet" href="../css/highlight.css" />
+
+<script type="text/javascript" src="../js/title.js"></script>
+<script type="text/javascript" src="../js/highlight.pack.js"></script>
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+  <h1>标签</h1>
+  
+  <h2>文本外观和含义</h2>
+  <p>很多标签可以改变文本外观，并关联隐藏含义。可分为两类：基于内容的样式（content-based style）和物理样式（physical style）。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>类型</th>
+        <th>标签</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td nowrap>基于内容的样式</td>
+        <td>
+          缩写（abbr）、首字母缩写（acronym）、地址（address）、强调（em/strong）、
+          长引用（blockquote）、短引用语（q）、引用/引证（cite）、定义项目（dfn）、
+          源代码（code）、变量名（var）、计算机代码样本（samp）、键盘码（kbd）
+        </td>
+        <td>强调的是内容的含义或意图，而非外观。外观应与普通文本不同，但标准未规定其外观，甚至不同标签外观可以一样。</td>
+      </tr>
+      <tr>
+        <td>物理样式</td>
+        <td>
+          粗体（b）、斜体（i）、删除字（del/s/strike）、插入字（ins）、打字机代码/等宽字体（tt）、
+          大号字体（big）、小号字体（small）、下标（sub）、上标（sup）
+        </td>
+        <td>精确控制样式和外观，但应避免使用</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <h1>属性</h1>
+  
+  <h2>链接 target 属性</h2>
+  <table>
+    <tr>
+      <th>属性</th>
+      <th>说明</th>
+    </tr>
+    <tr>
+      <td>_blank</td>
+      <td>新窗口</td>
+    </tr>
+    <tr>
+      <td>_parent</td>
+      <td>父框架集</td>
+    </tr>
+    <tr>
+      <td>_self</td>
+      <td>默认。当前框架</td>
+    </tr>
+    <tr>
+     <td>_top</td>
+      <td>整个窗口</td>
+    </tr>
+    <tr>
+     <td>framename</td>
+      <td>指定框架</td>
+    </tr>
+  </table>
+  
+  <div class="ext">
+    注：4 个值都以下划线开始。任何其他用一个下划线作为开头的窗口或者目标都会被浏览器忽略，
+    因此，不要将下划线作为文档中定义的任何框架 name 或 id 的第一个字符。
+  </div>
+  
+  <h2>HTML5 新属性语法</h2>
+  
+  <table>
+  	<thead>
+  		<tr>
+  			<th>类型</th>
+  			<th>示例</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>Empty</td>
+  			<td>&lt;input type="text" value="John Doe" disabled&gt;</td>
+  		</tr>
+  		<tr>
+  			<td>Unquoted</td>
+  			<td>&lt;input type="text" value=John Doe&gt;</td>
+  		</tr>
+  		<tr>
+  			<td>Double-quoted</td>
+  			<td>&lt;input type="text" value="John Doe"&gt;</td>
+  		</tr>
+  		<tr>
+  			<td>Single-quoted</td>
+  			<td>&lt;input type="text" value='John Doe'&gt;</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  <h1>综合</h1>
+
+  <h2>样式引用方式</h2>
+  <table>
+    <tr>
+      <th>引用方式</th>
+      <th>语法</th>
+    </tr>
+    <tr>
+      <td>外部样式表</td>
+      <td>&lt;link rel="stylesheet" type="text/css" href="*.css"&gt;</td>
+    </tr>
+    <tr>
+      <td>内部样式表</td>
+      <td>&lt;style type="text/css"&gt;...&lt;/style&gt;</td>
+    </tr>
+    <tr>
+      <td>内联样式</td>
+      <td>&lt;element style="..."&gt;</td>
+    </tr>
+  </table>
+  
+  <h2>HTML 转 XHTML</h2>
+  <ol>
+    <li>添加一个 XHTML &lt;!DOCTYPE> 到你的网页中</li>
+    <li>添加 xmlns 属性添加到每个页面的html元素中</li>
+    <li>改变所有的元素为小写</li>
+    <li>关闭所有的空元素</li>
+    <li>修改所有的属性名称为小写</li>
+    <li>所有属性值添加引号</li>
+  </ol>
+  
+  <h1>DOM</h1>
+  
+  <h2>属性</h2>
+  
+  <h3>nodeName 属性</h3>
+  
+  <table>
+  	<thead>
+  		<tr>
+  			<th>节点类型</th>
+  			<th>属性值</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>文本节点</td>
+  			<td>#text</td>
+  		</tr>
+  		<tr>
+  			<td>文档节点</td>
+  			<td>#document</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  <h3>nodeValue 属性</h3>
+  
+  <table>
+  	<thead>
+  		<tr>
+  			<th>节点类型</th>
+  			<th>属性值</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>元素节点</td>
+  			<td>undefined/null</td>
+  		</tr>
+  		<tr>
+  			<td>文本节点</td>
+  			<td>文本本身</td>
+  		</tr>
+  		<tr>
+  			<td>属性节点</td>
+  			<td>属性值</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  <h3>nodeType 属性</h3>
+  
+  <table>
+  	<thead>
+  		<tr>
+  			<th>元素类型</th>
+  			<th>NodeType</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>元素</td>
+  			<td>1</td>
+  		</tr>
+  		<tr>
+  			<td>属性</td>
+  			<td>2</td>
+  		</tr>
+  		<tr>
+  			<td>文本</td>
+  			<td>3</td>
+  		</tr>
+  		<tr>
+  			<td>注释</td>
+  			<td>8</td>
+  		</tr>
+  		<tr>
+  			<td>文档</td>
+  			<td>9</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  <h3>DOM 根节点特殊属性</h3>
+  
+  <table>
+  	<thead>
+  		<tr>
+  			<th>属性</th>
+  			<th>说明</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		<tr>
+  			<td>document.documentElement</td>
+  			<td>全部文档</td>
+  		</tr>
+  		<tr>
+  			<td>document.body</td>
+  			<td>文档的主体</td>
+  		</tr>
+  	</tbody>
+  </table>
+  
+  <h1>比较</h1>
+  
+  <h2>get vs. post</h2>
+  
+  <table>
+  	<thead>
+  		<tr>
+  			<th></th>
+  			<th>get</th>
+  			<th>post</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  	  <tr>
+  	  	<td>后退按钮/刷新</td>
+  	  	<td>无害</td>
+  	  	<td>数据会被重新提交（浏览器应该告知用户数据会被重新提交）。</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>书签</td>
+  	  	<td>可收藏为书签</td>
+  	  	<td>不可收藏为书签</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>缓存</td>
+  	  	<td>能被缓存</td>
+  	  	<td>不能缓存</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>编码类型</td>
+  	  	<td>application/x-www-form-urlencoded</td>
+  	  	<td>application/x-www-form-urlencoded 或 multipart/form-data。为二进制数据使用多重编码。</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>历史</td>
+  	  	<td>参数保留在浏览器历史中。</td>
+  	  	<td>参数不会保存在浏览器历史中。</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>对数据长度的限制</td>
+  	  	<td>是的。当发送数据时，GET 方法向 URL 添加数据；URL 的长度是受限制的（URL 的最大长度是 2048 个字符）。</td>
+  	  	<td>无限制。</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>对数据类型的限制</td>
+  	  	<td>只允许 ASCII 字符。</td>
+  	  	<td>没有限制。也允许二进制数据。</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>安全性</td>
+  	  	<td>与 POST 相比，GET 的安全性较差，因为所发送的数据是 URL 的一部分。在发送密码或其他敏感信息时绝不要使用 GET！</td>
+  	  	<td>POST 比 GET 更安全，因为参数不会被保存在浏览器历史或 web 服务器日志中。</td>
+  	  </tr>
+  	  <tr>
+  	  	<td>可见性</td>
+  	  	<td>数据在 URL 中对所有人都是可见的。</td>
+  	  	<td>数据不会显示在 URL 中。</td>
+  	  </tr>
+  	</tbody>
+  </table>
+  
+</body>
+</html>
