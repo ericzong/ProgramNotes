@@ -2,6 +2,10 @@
 
 ## 远程连接异常
 
+> 如果 MySQL 安装在虚拟机中，而且系统环境没有明显异常，那么应首先考虑是系统防火墙引起的。
+>
+> 这常见于 Win10 系统中，防火墙可能会阻止数据库客户端连接。
+
 异常信息：远程mysql_java.sql.SQLException: null, message from server: "Host 'xxx' is not allowed to connect
 
 简单来说，就是远程客户机不被允许访问MySQL，要使其可以访问需要作如下修改。
