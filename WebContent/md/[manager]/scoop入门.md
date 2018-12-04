@@ -123,6 +123,52 @@ java -version
 # openjdk version "12-ea" 2019-03-19
 ```
 
+## 多连接下载
+
+借助 aria2 可以使 scoop 具有多连接下载的功能。
+
+```powershell
+scoop install aria2
+scoop config aria2-enabled true
+scoop config aria2-retry-wait 3
+scoop config aria2-split 5
+scoop config aria2-max-connection-per-server 5
+scoop config aria2-min-split-size 5M
+```
+
+## 代理
+
+### 通过代理安装 scoop
+
+```powershell
+# If you want to use a proxy that isn't already configured in Internet Options
+[net.webrequest]::defaultwebproxy = new-object net.webproxy "http://proxy.example.org:8080"
+# If you want to use the Windows credentials of the logged-in user to authenticate with your proxy
+[net.webrequest]::defaultwebproxy.credentials = [net.credentialcache]::defaultcredentials
+# If you want to use other credentials (replace 'username' and 'password')
+[net.webrequest]::defaultwebproxy.credentials = new-object net.networkcredential 'username', 'password'
+```
+
+### 为 scoop 配置代理
+
+```powershell
+scoop config proxy [username:password@]host:port
+scoop config rm proxy
+
+scoop config proxy currentuser@default
+scoop config proxy user:password@default
+scoop config proxy none # 绕过代理直连
+```
+
+### 为 git 配置代理
+
+scoop 很多更新操作是基于 GitHub 的，因此，通常也会为 git 配置代理。
+
+```powershell
+git config --global http.proxy http://host:port
+git config --global https.proxy https://host:port
+```
+
 # 参考
 
 ## 常用命令列表
