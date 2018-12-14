@@ -138,6 +138,15 @@ scoop config aria2-min-split-size 5M
 
 ## 代理
 
+### 命令行代理
+
+```shell
+set http_proxy=http://host:port
+set https_proxy=http://host:port
+set http_proxy_user=
+set http_proxy_pass=
+```
+
 ### 通过代理安装 scoop
 
 ```powershell
