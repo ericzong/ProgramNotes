@@ -33,3 +33,11 @@ Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
 Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
 ```
 
+# RubyGems 配置源
+
+默认情况下，`gem install` 命令下载软件包可能较慢，可通过以下命令配置镜像源：
+
+```powershell
+gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+```
+
