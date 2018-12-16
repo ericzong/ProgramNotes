@@ -1,0 +1,35 @@
+# 中文路径
+
+问题：默认情况下，jekyll 本地预览时，如果文档标题中有中文则路径中也就存在中文，此时服务器会因路径乱码问题导致该文档无法访问到。
+
+解决该问题需要把服务器的路径编码改为 UTF-8，配置文件是 `RUBY_ROOT\lib\ruby\2.4.0\webrick\httpservlet\filehandler.rb` 。
+
+请根据下面给出的上下文搜索并插入带有备注的行（两处）：
+
+```
+path = req.path_info.dup.force_encoding(Encoding.find("filesystem"))
+path.force_encoding("UTF-8") # 加入编码
+
+break if base == "/"
+base.force_encoding("UTF-8") #加入編碼
+```
+
+# msys2 配置源
+
+默认情况下，msys2 下载软件包可能会很慢，可以修改以下几个配置文件修改其下载源：
+
+```
+# MSYS2_ROOT\etc\pacman.d\mirrorlist.mingw32
+http://mirrors.ustc.edu.cn/msys2/mingw/i686/
+Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
+
+# MSYS2_ROOT\etc\pacman.d\mirrorlist.mingw64
+Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64/
+Server = http://mirror.bit.edu.cn/msys2/REPOS/
+Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
+
+# MSYS2_ROOT\etc\pacman.d\mirrorlist.msys
+Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
+Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
+```
+
