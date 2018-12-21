@@ -4,6 +4,23 @@
 
 # 配置 
 
+## 相关路径
+
+| 名称             | 路径                               |
+| ---------------- | ---------------------------------- |
+| 包全局命令目录   | ~/AppData/Roaming/npm              |
+| 包全局目录       | ~/AppData/Roaming/npm/node_modules |
+| 用户全局配置文件 | ~/.npmrc                           |
+
+```shell
+# 配置包全局目录
+npm config set prefix <MY_NPM_DIR>
+# 查看包全局目录
+npm root -g
+# 配置cache目录
+npm config set cache <MY_CACHE_DIR>
+```
+
 ## 镜像
 
 ```shell
