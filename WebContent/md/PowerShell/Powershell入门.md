@@ -6,3 +6,5 @@
 
 [Powershell - GitHub](https://github.com/PowerShell/PowerShell)
 
+[PowerShell在线教程 - PSTips.net](https://www.pstips.net/powershell-online-tutorials)
+
