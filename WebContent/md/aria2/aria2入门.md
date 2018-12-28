@@ -70,7 +70,7 @@ max-concurrent-downloads=5
 # 同一服务器连接数, 添加时可指定, 默认:1
 max-connection-per-server=5
 
-# 最小文件分片大小, 添加时可指定, 取值范围1M -1024M, 默认:20M
+# 最小文件分片大小, 添加时可指定, 取值范围1M-1024M, 默认:20M
 # 假定size=10M, 文件为20MiB 则使用两个来源下载; 文件为15MiB 则使用一个来源下载
 min-split-size=10M
 
@@ -182,9 +182,13 @@ aria2c --conf-path=aria2.conf
 
 ## 管理
 
-通常，我们习惯在管理界面中进行下载操作，aria2 有不少可选的 WebUI 管理界面，比如：http://yaaw.qiniudn.com/。
+通常，我们习惯在管理界面中进行下载操作，aria2 有不少可选的 WebUI 管理界面。
 
-最简单的方式是：浏览器打开该页面，进行配置连接到本地 aria2 即可。
+只是有的是在线的，通常简单可用；有的可能需要自行部署服务，对技术有一定的要求。这就要根据自己的需求和能力来进行选择啰。
+
+### [YAAW](http://yaaw.qiniudn.com/)
+
+[YAAW](http://yaaw.qiniudn.com/) 实质是一个在线的前端，最简单的使用方式是浏览器打开该页面，进行配置连接到本地 aria2 即可。
 
 如果你使用 chrome 浏览器，还可以安装相应插件 [YAAW For Chrome：控制台界面](https://chrome.google.com/webstore/detail/hbjpfaalboebibgfmedmjijhbjapcnki)，方便使用。
 
@@ -194,19 +198,31 @@ WebUI 管理界面通常只需要设置 JSON-RPC Path 即可，格式如下：
 http://localhost:6800/jsonrpc
 ```
 
-有的 WebUI 管理界面要求必须启用 token（需要在配置文件中配置），则路径应该如下：
+如果配置了 token，则路径应该如下：
 
 ```
-http://token:aria2token@localhost:6800/jsonrpc
+http://token:ericzong@localhost:6800/jsonrpc
 ```
 
-注意：aria2token 是指配置文件中配置的 token，应根据配置自行替换。另外，端口也是可配置的，注意替换。
+> 其中，ericzong 是指配置文件中配置项 rpc-secret，应根据配置自行替换。另外，端口也是可配置的，注意替换。
+>
+> 新版本的 aria2 推荐配置 token，以替代配置用户名和密码。
+>
+> 有的 WebUI 仅支持 token 连接，因此，最好配置好 token。
 
-## 其他
+### [webui-aria2](https://github.com/ziahamza/webui-aria2)
 
-如果要使用迅雷离线下载，可以安装 chrome 插件 [迅雷离线助手](https://chrome.google.com/webstore/detail/eehlmkfpnagoieibahhcghphdbjcdmen)。
+[webui-aria2](https://github.com/ziahamza/webui-aria2) 是官方推荐的前端，不过需要自行部署服务。
 
-注意：该插件笔者尚未验证，据说已经失效了。
+从 GitHub 上把项目下载到本地，在项目根目录执行以下命令运行即可：
+
+```shell
+node node-server.js
+```
+
+显然，需要事先安装 Node.js。
+
+配置跟 YAAW 类似。
 
 # 参考资源
 
