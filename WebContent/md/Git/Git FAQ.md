@@ -14,12 +14,24 @@ set GIT_SSL_NO_VERIFY=true git push
 
 ## 命令回显中文为转义字符
 
-触发场景：status 等命令时。
+触发场景一：执行 status 等命令。
 
-原因：默认不处理 UTF-8文件名。
-
-```false
+```shell
 git config --global core.quotepath false
+```
+
+触发场景二：执行 git diff、git log 等命令。
+
+设置环境变量 LANG=zh_CN.UTF-8 即可。
+
+```shell
+# ----- cmd 设置（临时） -----
+set LANG=zh_CN.UTF-8
+# ----- powershell -----
+# 临时设置
+$env:LANG='zh_CN.UTF-8'
+# 配置当前用户环境变量
+[enviroment]::setEnvironmentVariable('LANG', 'zh_CN.UTF-8', 'User')
 ```
 
 ## 将空文件夹加入版本控制
