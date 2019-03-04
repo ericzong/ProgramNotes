@@ -1,3 +1,7 @@
+# 简介
+
+nvm 是 Node.js 的一个多版本管理工具，可以灵活的切换 Node.js 版本。
+
 # 下载
 
 https://github.com/coreybutler/nvm-windows/releases
