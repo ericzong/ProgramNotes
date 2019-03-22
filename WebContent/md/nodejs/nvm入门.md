@@ -20,7 +20,7 @@ nvm 有两种安装包：安装版与绿色版。
 
 在 nvm 根目录新建 settings.txt 文件，添加类似如下配置信息：
 
-```
+```ini
 root:C:/nvm
 path:C:/nvm/nodejs
 arch:64
@@ -56,7 +56,7 @@ nvm install <node_version>
 
 执行安装命令并指定 node 版本号即可进行安装。安装完成后，使用 use 命令切换要使用的 node 版本。
 
-```
+```shell
 nvm use <node_version>
 ```
 
@@ -64,20 +64,28 @@ nvm use <node_version>
 
 # 常用命令
 
-```
-nvm version					 // 查看 nvm 版本
-nvm install <node_version> 	  // 安装 node 版本
-nvm uninstall <node_version>  // 卸载 node 版本
-nvm list 				    // 查看已安装 node 版本
-nvm use <node_version>		 // 切换到指定 node 版本
-nvm root 					// 查看 nvm 根目录
+```shell
+# 查看 nvm 版本
+nvm version
+# 查看 nvm 根目录
+nvm root
+# 安装 node 版本
+nvm install <node_version>
+# 卸载 node 版本
+nvm uninstall <node_version>
+# 查看已安装 node 版本
+nvm list
+# 切换到指定 node 版本
+nvm use <node_version>
 ```
 
 # 原理
 
-安装某版本的 node 后，会发现 nvm 根目录下多了一个该版本（比如：v11.0.0）的文件夹，node 的文件都在其下。
+首先，安装某版本的 node 后，会发现 nvm 根目录下多了一个该版本（比如：v11.0.0）的目录，node 的文件都在其下。安装多个版本后，就会得到多个版本目录。
 
-同时，会生成一个上文配置的 node 的快捷方式，比如：C:/nvm/nodejs，它指向当前使用的 node 版本文件夹。
+接下来，最容易想到的版本切换方式是，当需要使用某个版本时，就将该版本目录加到 Path 中即可。但是，由于涉及版本频繁切换，如果单纯将版本目录添加到 Path，就会涉及到需要“清理”旧版本路径，这可能会引起一些问题。
+
+nvm 使用了一个比较通用的技巧，它生成了一个目录联接，比如：C:/nvm/nodejs，它指向当前使用的 node 版本目录。而在 Path 中添加的正是这个目录联接的路径。在切换版本时，则不再需要操作环境变量了，仅仅是将该目录联接指向相应的版本目录即可。
 
 # 附录
 
@@ -93,7 +101,7 @@ nvm 根目录和 node 快捷方式路径都应该是全英文的。因为，最�
 
 在 nvm 的配置文件 settings.txt 中追加镜像信息（这里以淘宝镜像为例）：
 
-```
+```ini
 node_mirror: https://npm.taobao.org/mirrors/node/
 npm_mirror: https://npm.taobao.org/mirrors/npm/
 ```
