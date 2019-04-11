@@ -20,7 +20,7 @@ base.force_encoding("UTF-8") #加入編碼
 
 ```
 # MSYS2_ROOT\etc\pacman.d\mirrorlist.mingw32
-http://mirrors.ustc.edu.cn/msys2/mingw/i686/
+Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686/
 Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
 
 # MSYS2_ROOT\etc\pacman.d\mirrorlist.mingw64
