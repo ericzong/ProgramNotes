@@ -1,6 +1,6 @@
 # 中文路径
 
-问题：默认情况下，jekyll 本地预览时，如果文档标题中有中文则路径中也就存在中文，此时服务器会因路径乱码问题导致该文档无法访问到。
+问题 1：默认情况下，jekyll 本地预览时，如果文档标题中有中文则路径中也就存在中文，此时服务器会因路径乱码问题导致该文档无法访问到。
 
 解决该问题需要把服务器的路径编码改为 UTF-8，配置文件是 `RUBY_ROOT\lib\ruby\2.4.0\webrick\httpservlet\filehandler.rb` 。
 
@@ -13,6 +13,12 @@ path.force_encoding("UTF-8") # 加入编码
 break if base == "/"
 base.force_encoding("UTF-8") #加入編碼
 ```
+
+问题 2：`Error:  incompatible character encodings: UTF-8 and GBK`
+
+通常，当本地网站根目录路径包含中文字符时，会出现该问题。推测应该是 jekyll 内部默认使用 UTF-8 编码，但是系统路径默认是 GBK 编码，因此不兼容。
+
+最简单的解决方案就是把网站置于英文路径下。
 
 # msys2 配置源
 
