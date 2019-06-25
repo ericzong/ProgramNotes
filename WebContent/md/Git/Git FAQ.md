@@ -54,3 +54,17 @@ fatal: Not a valid object name: 'master'.
 通常这意味着当前仓库是新创建的，git init命令不会创建master分支，只有当提交时才会创建。
 
 不过，直接提交一个空仓库是不被允许的，因此，应该添加一些文件再提交。
+
+# 技巧
+
+## 避免每次输入密码
+
+如使用 HTTPS URL 推送，Git 服务器会询问用户名与密码。可设置“credential cache”，保存在内存中几分钟：
+
+```shell
+git config --global credential.helper cache
+```
+
+## 引用远程分支
+
+在跟踪分支中，可通过 @{upstream} 或 @{u} 引用远程分支。比如：在master分支可使用git merge @{u}来取代git merge origin/master。
